@@ -11,17 +11,24 @@ import java.util.regex.Pattern;
 public class Main {
 
     public static void main(String[] args) {
-
         final String patternsFileName = "patterns.txt";
         Map<String, String> patterns = readPatterns(patternsFileName);
 
-        final File folder = new File("testFolder");
-        File[] files = folder.listFiles();
+        final File folder = new File("main");
+        analyzeFilesFromFolder(folder, patterns);
 
-        for (File file : files) {
-            findPatternsInFile(file.getAbsolutePath(), patterns);
+    }
+
+    public static void analyzeFilesFromFolder(File folder, Map<String, String> patterns) {
+        File[] folderEntries = folder.listFiles();
+        for (File entry : folderEntries) { //if folder - next step
+            if (entry.isDirectory()) {
+                analyzeFilesFromFolder(entry, patterns);
+                continue;
+            }
+            // if file
+            findPatternsInFile(entry.getAbsolutePath(), patterns);
         }
-
     }
 
     public static Map<String, String> readPatterns(String fileName) {
@@ -31,7 +38,6 @@ public class Main {
         Map<String, String> patterns = new HashMap<>();
 
         try {
-
             fr = new FileReader(fileName);
             br = new BufferedReader(fr);
 

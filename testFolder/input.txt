@@ -1,3 +1,0 @@
-android.permission.DEVICE_ADMIN_ENABLED
-android.permission.RECEIVE_WAP_PUSH
-android.permission.ADD_VOICEMAIL
